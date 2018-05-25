@@ -4,6 +4,18 @@ let restaurants,
 var map
 var markers = []
 
+if('serviceWorker' in navigator) { // found from https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#Enter_service_workers
+  navigator.serviceWorker.register('js/sw/sw.js', {scope: 'js/sw/'})
+    .then(function(reg) {
+      console.log('Service Worker Registered');
+    })
+    .catch(function(error) {
+      console.log('Service Worker Registration failed with ' + error);
+    });
+} else {
+  console.log('No support for Service Workers');
+}
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */

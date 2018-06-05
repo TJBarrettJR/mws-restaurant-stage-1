@@ -1,4 +1,5 @@
 let staticCacheName = 'mws-restaurant-v1';
+let siteOrigin = 'https://mws-restaurant-stage-1-tjbarre1.codeanyapp.com';
 
 self.addEventListener('install', function(event) {
   console.log('The sw was installed!');
@@ -27,9 +28,20 @@ self.addEventListener('install', function(event) {
   )
 });
 
-self.addEventListener('fetch', function(event) {
-  console.log(event);
+self.addEventListener('fetch', function(event) {  
+  
+  if (new URL(event.request.url).origin !== siteOrigin) {
+    fetch(event.request);
+  }
+
   event.respondWith(
-    caches.match(event.request)
+    caches.match(event.request, {ignoreSearch: true}).then(function(response) {
+      return response || fetch(event.request).then(function(response) {
+        return caches.open(staticCacheName).then(function(cache) {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      });
+    })
   );
 });

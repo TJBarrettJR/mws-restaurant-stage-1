@@ -177,11 +177,11 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.setAttribute('alt', ''); // Add a blank alt tag for screen readers to ignore image and instead read the restaurant name on next h1
+  image.setAttribute('alt', ''); // Add a blank alt tag for screen readers to ignore image and instead read the restaurant name on next h2
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 

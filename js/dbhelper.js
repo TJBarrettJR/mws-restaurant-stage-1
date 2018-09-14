@@ -10,27 +10,27 @@ class DBHelper {
   static get DATABASE_URL() {
     // Removed port and swapped to web server
     //const port = 8000 // Change this to your server port
-    //return `https://localhost:${port}/data/restaurants.json`;
-    return `https://mws-restaurant-stage-1-tjbarre1.codeanyapp.com/data/restaurants.json`;
+    //return `https://localhost:${port}/restaurants.json`;
+    return `https://mws-restaurant-stage-2-tjbarre1.codeanyapp.com/restaurants`; 
   }
 
   /**
    * Fetch all restaurants.
    */
-  static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
+  static fetchRestaurants(callback, id) {
+
+    let requestURL = DBHelper.DATABASE_URL;
+
+    if (id) {
+      requestURL = requestURL + '/' + id;
+    }
+    
+    fetch(requestURL)
+      .then(response => response.json()) // Might need to change this to account for already parsed objects
+      .then(restaurants => 
+        callback(null, restaurants)
+      )
+      .catch(error =>{console.log(error); callback(`Request failed. Returned status of ${error}`, null);});
   }
 
   /**
@@ -152,7 +152,7 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`/img/${restaurant.photograph}.jpg`);
   }
 
   /**
@@ -164,8 +164,8 @@ class DBHelper {
       title: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant),
       map: map,
-      animation: google.maps.Animation.DROP}
-    );
+      animation: google.maps.Animation.DROP
+    });
     return marker;
   }
 

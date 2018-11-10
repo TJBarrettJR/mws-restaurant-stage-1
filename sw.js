@@ -2,8 +2,8 @@ importScripts('js/idb.js');
 
 let staticCacheName = 'mws-restaurant-v1';
 let restaurantDB = 'RestaurantDB';
-let siteOrigin = 'https://mws-restaurant-stage-1-tjbarre1.codeanyapp.com';
-let dataOrigin = 'https://mws-restaurant-stage-2-tjbarre1.codeanyapp.com';
+let siteOrigin = 'http://localhost:8000';  //'https://mws-restaurant-stage-1-tjbarre1.codeanyapp.com';
+let dataOrigin = 'http://localhost:1337';  //'https://mws-restaurant-stage-2-tjbarre1.codeanyapp.com';
 
 self.addEventListener('install', function(event) {
   console.log('The sw was installed!');

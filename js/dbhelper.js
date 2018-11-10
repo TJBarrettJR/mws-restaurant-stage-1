@@ -9,9 +9,9 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     // Removed port and swapped to web server
-    //const port = 8000 // Change this to your server port
-    //return `https://localhost:${port}/restaurants.json`;
-    return `https://mws-restaurant-stage-2-tjbarre1.codeanyapp.com/restaurants`; 
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}/restaurants`;
+    //return `https://mws-restaurant-stage-2-tjbarre1.codeanyapp.com/restaurants`; 
   }
 
   /**
